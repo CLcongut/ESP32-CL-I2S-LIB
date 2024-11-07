@@ -5,7 +5,7 @@
 
 #include "driver/i2s.h"
 
-class I2S_93
+class CL_I2S_LIB
 {
 public:
   typedef enum
@@ -44,7 +44,7 @@ public:
    * @param transmitMode TX or RX
    * @param modulateMode PCM or PDM
    */
-  I2S_93(uint8_t deviceIndex, i2smode_t peripheralActor, i2smode_t transmitMode, i2smode_t modulateMode);
+  CL_I2S_LIB(uint8_t deviceIndex, i2smode_t peripheralActor, i2smode_t transmitMode, i2smode_t modulateMode);
   /**
    * @brief Set sample rate and bps.
    *
