@@ -2,10 +2,11 @@
 #include <Arduino.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-
 #include "driver/i2s.h"
 
-class I2S_93
+// #define SETMCLK
+
+class CL_I2S_LIB
 {
 public:
   typedef enum
@@ -44,7 +45,7 @@ public:
    * @param transmitMode TX or RX
    * @param modulateMode PCM or PDM
    */
-  I2S_93(uint8_t deviceIndex, i2smode_t peripheralActor, i2smode_t transmitMode, i2smode_t modulateMode);
+  CL_I2S_LIB(uint8_t deviceIndex, i2smode_t peripheralActor, i2schnformat_t transmitMode, i2scommformat_t modulateMode);
   /**
    * @brief Set sample rate and bps.
    *
@@ -72,6 +73,12 @@ public:
    * @param dmaBufLen DMA buffer lengh.
    */
   void setDMABuffer(int dmaBufCnt, int dmaBufLen);
+  /**
+   * @brief Set the MCLK Pin.
+   *
+   * @param mclkPin MCLK Pin.
+   */
+  void setPinMCLK(int mclkPin);
   /**
    * @brief Install i2s with PCM mode.
    *
@@ -105,15 +112,14 @@ public:
   size_t Write(void *storageAddr, int sampleSize);
   /**
    * @brief Stop the i2s.
-   *
    */
   void End();
 
 private:
   i2s_port_t _deviceIndex;
   i2s_mode_t _i2sdvsMode;
-  i2smode_t _transmitMode;
-  i2smode_t _modulateMode;
+  i2schnformat_t _transmitMode;
+  i2scommformat_t _modulateMode;
   uint32_t _sampleRate;
   i2s_bits_per_sample_t _bitsPerSample;
   i2s_channel_fmt_t _channelformat;
@@ -122,4 +128,5 @@ private:
   int _dmaBufCnt;
   int _dmaBufLen;
   bool _useApll;
+  int _mclkPin;
 };

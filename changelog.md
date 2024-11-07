@@ -26,6 +26,7 @@
  * change lib name to CL-I2S-LIB
  * change file name to cl_i2s_lib
  * change class name to CL_I2S_LIB
+ * add mclk choice func(not done yet)
 
 ## 3.0 plan:
  * next update need to add more error log

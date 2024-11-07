@@ -1,12 +1,16 @@
 #include "cl_i2s_lib.h"
 
-CL_I2S_LIB::CL_I2S_LIB(uint8_t deviceIndex, i2smode_t peripheralActor, i2smode_t transmitMode, i2smode_t modulateMode) : _deviceIndex((i2s_port_t)deviceIndex),
-                                                                                                                         _transmitMode(transmitMode),
-                                                                                                                         _modulateMode(modulateMode),
-                                                                                                                         _intrAlloc(0),
-                                                                                                                         _dmaBufCnt(16),
-                                                                                                                         _dmaBufLen(64),
-                                                                                                                         _useApll(false)
+CL_I2S_LIB::CL_I2S_LIB(uint8_t deviceIndex,
+                       i2smode_t peripheralActor,
+                       i2schnformat_t transmitMode,
+                       i2scommformat_t modulateMode) : _deviceIndex((i2s_port_t)deviceIndex),
+                                                       _transmitMode(transmitMode),
+                                                       _modulateMode(modulateMode),
+                                                       _intrAlloc(0),
+                                                       _dmaBufCnt(16),
+                                                       _dmaBufLen(64),
+                                                       _useApll(false),
+                                                       _mclkPin(I2S_PIN_NO_CHANGE)
 {
   _i2sdvsMode = i2s_mode_t(peripheralActor | transmitMode | modulateMode);
 }
@@ -34,6 +38,15 @@ void CL_I2S_LIB::setDMABuffer(int dmaBufCnt, int dmaBufLen)
   _dmaBufLen = dmaBufLen;
 }
 
+void CL_I2S_LIB::setPinMCLK(int mclkPin)
+{
+#ifdef SETMCLK
+  _mclkPin = mclkPin;
+#else
+  _mclkPin = I2S_PIN_NO_CHANGE;
+#endif
+}
+
 void CL_I2S_LIB::install(int bckPin, int wsPin, int dataPin)
 {
   i2s_config_t i2s_config = {
@@ -52,6 +65,7 @@ void CL_I2S_LIB::install(int bckPin, int wsPin, int dataPin)
   {
   case RX | PCM:
     pin_config = {
+        .mck_io_num = _mclkPin,
         .bck_io_num = bckPin,
         .ws_io_num = wsPin,
         .data_out_num = I2S_PIN_NO_CHANGE,
@@ -60,6 +74,7 @@ void CL_I2S_LIB::install(int bckPin, int wsPin, int dataPin)
 
   case RX | PDM:
     pin_config = {
+        .mck_io_num = _mclkPin,
         .bck_io_num = I2S_PIN_NO_CHANGE,
         .ws_io_num = bckPin,
         .data_out_num = I2S_PIN_NO_CHANGE,
@@ -68,6 +83,7 @@ void CL_I2S_LIB::install(int bckPin, int wsPin, int dataPin)
 
   case TX | PCM:
     pin_config = {
+        .mck_io_num = _mclkPin,
         .bck_io_num = bckPin,
         .ws_io_num = wsPin,
         .data_out_num = dataPin,
@@ -76,6 +92,7 @@ void CL_I2S_LIB::install(int bckPin, int wsPin, int dataPin)
 
   case TX | PDM:
     pin_config = {
+        .mck_io_num = _mclkPin,
         .bck_io_num = I2S_PIN_NO_CHANGE,
         .ws_io_num = bckPin,
         .data_out_num = dataPin,
