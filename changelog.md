@@ -28,6 +28,9 @@
  * change class name to CL_I2S_LIB
  * add mclk choice func(not done yet)
 
+# 2.41
+ * fix constructor bug
+
 ## 3.0 plan:
  * next update need to add more error log
  * and way to defence wrong parameter

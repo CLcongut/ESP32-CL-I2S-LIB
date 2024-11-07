@@ -45,7 +45,7 @@ public:
    * @param transmitMode TX or RX
    * @param modulateMode PCM or PDM
    */
-  CL_I2S_LIB(uint8_t deviceIndex, i2smode_t peripheralActor, i2schnformat_t transmitMode, i2scommformat_t modulateMode);
+  CL_I2S_LIB(uint8_t deviceIndex, i2smode_t peripheralActor, i2smode_t transmitMode, i2smode_t modulateMode);
   /**
    * @brief Set sample rate and bps.
    *
@@ -118,8 +118,8 @@ public:
 private:
   i2s_port_t _deviceIndex;
   i2s_mode_t _i2sdvsMode;
-  i2schnformat_t _transmitMode;
-  i2scommformat_t _modulateMode;
+  i2smode_t _transmitMode;
+  i2smode_t _modulateMode;
   uint32_t _sampleRate;
   i2s_bits_per_sample_t _bitsPerSample;
   i2s_channel_fmt_t _channelformat;

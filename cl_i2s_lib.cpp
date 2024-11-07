@@ -2,15 +2,15 @@
 
 CL_I2S_LIB::CL_I2S_LIB(uint8_t deviceIndex,
                        i2smode_t peripheralActor,
-                       i2schnformat_t transmitMode,
-                       i2scommformat_t modulateMode) : _deviceIndex((i2s_port_t)deviceIndex),
-                                                       _transmitMode(transmitMode),
-                                                       _modulateMode(modulateMode),
-                                                       _intrAlloc(0),
-                                                       _dmaBufCnt(16),
-                                                       _dmaBufLen(64),
-                                                       _useApll(false),
-                                                       _mclkPin(I2S_PIN_NO_CHANGE)
+                       i2smode_t transmitMode,
+                       i2smode_t modulateMode) : _deviceIndex((i2s_port_t)deviceIndex),
+                                                 _transmitMode(transmitMode),
+                                                 _modulateMode(modulateMode),
+                                                 _intrAlloc(0),
+                                                 _dmaBufCnt(16),
+                                                 _dmaBufLen(64),
+                                                 _useApll(false),
+                                                 _mclkPin(I2S_PIN_NO_CHANGE)
 {
   _i2sdvsMode = i2s_mode_t(peripheralActor | transmitMode | modulateMode);
 }
