@@ -31,6 +31,10 @@
 # 2.41
  * fix constructor bug
 
+# 2.42
+ * fix setformat -> setformat
+ * google format
+
 ## 3.0 plan:
  * next update need to add more error log
  * and way to defence wrong parameter
